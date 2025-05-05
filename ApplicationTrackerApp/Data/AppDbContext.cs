@@ -9,5 +9,6 @@ namespace ApplicationTrackerApp.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<JobApplication> JobApplications { get; set; }
     }
 }
