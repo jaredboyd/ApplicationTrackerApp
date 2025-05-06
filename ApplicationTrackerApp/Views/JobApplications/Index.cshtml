@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ApplicationTrackerApp.Models.JobApplication>
+
+<h2>Your Job Applications</h2>
+
+<a class="btn btn-success mb-3" href="/JobApplications/Create">+ New Application</a>
+
+<table class="table table-bordered">
+	<thead class="table-dark">
+		<tr>
+			<th>Company</th>
+			<th>Position</th>
+			<th>Date Applied</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var app in Model)
+		{
+			<tr>
+				<td>@app.Company</td>
+				<td>@app.Position</td>
+				<td>@app.DateApplied.ToShortDateString()</td>
+				<td>
+					<a href="/JobApplications/Delete/@app.Id" class="btn btn-danger btn-sm">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
