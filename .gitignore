@@ -362,7 +362,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# Sqlite database files
+# Ignore SQLite DB files
 app.db
 *.db-shm
 *.db-wal
+/ApplicationTrackerApp/app.db\
