@@ -1,14 +1,16 @@
 ﻿@{
-    ViewData["Title"] = "Register";
+	ViewData["Title"] = "Register";
 }
 
-<h2>Register</h2>
+<div class="container col-md-8 col-lg-6">
+	<h2>Register</h2>
 
-<form asp-action="Register" method="post">
-	<input type="text" name="username" placeholder="Username" class="form-control" />
-	<input type="password" name="password" placeholder="Password" class="form-control mt-2" />
-	<button type="submit" class="btn btn-primary mt-3 mb-3">Register</button>
-</form>
-<div style="display:flex;">
-	<a class="mx-auto" style="text-decoration:none; margin:auto;" href="/Account/Login">Already registered? Login Here</a>
+	<form asp-action="Register" method="post">
+		<input type="text" name="username" placeholder="Username" class="form-control" />
+		<input type="password" name="password" placeholder="Password" class="form-control mt-2" />
+		<button type="submit" class="btn btn-primary mt-3 mb-3">Register</button>
+	</form>
+	<div style="display:flex;">
+		<a class="mx-auto" style="text-decoration:none; margin:auto;" href="/Account/Login">Already registered? Login Here</a>
+	</div>
 </div>
