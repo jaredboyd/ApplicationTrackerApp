@@ -4,8 +4,11 @@
 
 <h2>Login</h2>
 
-<form asp-action="Login" method="post">
+<form asp-controller="Account" asp-action="Login" method="post">
     <input type="text" name="username" placeholder="Username" class="form-control" />
 	<input type="password" name="password" placeholder="Password" class="form-control mt-2" />
-    <button type="submit" class="btn btn-primary mt-3">Login</button>
+    <button type="submit" class="btn btn-primary mt-3 mb-3">Login</button>
 </form>
+<div style="display:flex;">
+    <a class="mx-auto" style="text-decoration:none; margin:auto;" href="/Account/Register">Don't have an account? Register Here</a>
+</div>
