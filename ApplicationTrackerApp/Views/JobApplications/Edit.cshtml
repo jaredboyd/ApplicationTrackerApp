@@ -5,14 +5,32 @@
 }
 
 <style>
+	.title-area {
+		display: flex;
+		justify-content: space-between;
+	}
+
+		.title-area a {
+			height: fit-content;
+			display: flex;
+			align-self: flex-end;
+		}
+
 	textarea {
 		resize: none;
 		height: 9em;
 	}
 </style>
 
-<h2>Edit Application</h2>
-<p>@Model.Company - @Model.Position</p>
+
+<div class="title-area">
+	<div>
+		<h2>Edit Application</h2>
+		<p>@Model.Company - @Model.Position</p>
+	</div>
+
+	<a href="/JobApplications/Delete/@Model.Id" class="btn btn-danger btn-sm px-3 py-2">Delete</a>
+</div>
 
 <form asp-action="Edit" method="post">
 	<input type="hidden" asp-for="Id" />

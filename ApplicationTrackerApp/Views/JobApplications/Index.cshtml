@@ -6,19 +6,28 @@
 		justify-content: space-between;
 	}
 
-	.title-area a {
-		height: fit-content;
-		display: flex;
-		align-self: flex-end;
-	}
+		.title-area a {
+			height: fit-content;
+			display: flex;
+			align-self: flex-end;
+		}
 
 	.edit-delete {
 		display: flex;
 		justify-content: space-evenly;
 	}
 
-	.edit-delete a {
-		min-width: 5em;
+		.edit-delete a {
+			min-width: 5em;
+		}
+
+	.clickable-row {
+		cursor: pointer;
+	}
+
+	.clickable-row:hover {
+		cursor: pointer;
+		background-color: rgb(202, 179, 218, .5);
 	}
 </style>
 
@@ -45,21 +54,29 @@
 			<th>Company</th>
 			<th>Position</th>
 			<th>Date Applied</th>
-			<th></th>
+			@* <th></th> *@
 		</tr>
 	</thead>
 	<tbody>
 		@foreach (var app in Model?.Applications)
 		{
-			<tr>
+			<tr class="clickable-row" onclick="window.location='/JobApplications/Edit/@app.Id'">
 				<td>@app.Company</td>
 				<td>@app.Position</td>
 				<td>@app.DateApplied.ToShortDateString()</td>
-				<td class="edit-delete">
+				@* <td class="edit-delete">
 					<a href="/JobApplications/Edit/@app.Id" class="btn btn-primary btn-sm px-3 mr-3">Edit</a>
 					<a href="/JobApplications/Delete/@app.Id" class="btn btn-danger btn-sm px-3">Delete</a>
-				</td>
+				</td> *@
 			</tr>
 		}
 	</tbody>
 </table>
+
+<script>
+	$(document).ready(function() {
+		$(".clickable-row").click(function() {
+			window.location = $(this).data("url");
+		});
+	});
+</script>
