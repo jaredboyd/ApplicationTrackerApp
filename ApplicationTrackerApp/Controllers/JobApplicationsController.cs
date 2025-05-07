@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using ApplicationTrackerApp.Models;
+using ApplicationTrackerApp.ViewModels;
 
 namespace ApplicationTrackerApp.Controllers
 {
@@ -20,12 +21,19 @@ namespace ApplicationTrackerApp.Controllers
         public async Task<IActionResult> Index()
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            string firstName = _context.Users.FirstOrDefault(x => x.Id == userId)?.FirstName;
             var apps = await _context.JobApplications
                 .Where(j => j.UserId == userId)
                 .OrderByDescending(j => j.DateApplied)
                 .ToListAsync();
 
-            return View(apps);
+            var viewModel = new JobApplicationsViewModel
+            {
+                Applications = apps,
+                FirstName = firstName,
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Create()
@@ -45,6 +53,44 @@ namespace ApplicationTrackerApp.Controllers
             model.DateApplied = DateTime.Now;
 
             _context.JobApplications.Add(model);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Edit(int id)
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            JobApplication model = _context.JobApplications.FirstOrDefault(j => j.UserId == userId && j.Id == id);
+            if(model != null)
+            {
+                return View(model);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(JobApplication model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var existing = await _context.JobApplications.FirstOrDefaultAsync(j => j.Id == model.Id && j.UserId == userId);
+
+            if(existing == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            existing.Position = model.Position;
+            existing.Company = model.Company;
+            existing.DateEdited = DateTime.Now;
+            existing.Notes = model.Notes;
+
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

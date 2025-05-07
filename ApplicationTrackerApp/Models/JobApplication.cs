@@ -13,5 +13,7 @@ namespace ApplicationTrackerApp.Models
 
         public int UserId { get; set; }
         public User? User { get; set; }
+        public DateTime? DateEdited { get; set; } = null;
+        public string? Notes { get; set; }
     }
 }

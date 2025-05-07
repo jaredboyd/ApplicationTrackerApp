@@ -1,8 +1,43 @@
-﻿@model IEnumerable<ApplicationTrackerApp.Models.JobApplication>
+﻿@model ApplicationTrackerApp.ViewModels.JobApplicationsViewModel
 
-<h2>Your Job Applications</h2>
+<style>
+	.title-area {
+		display: flex;
+		justify-content: space-between;
+	}
 
-<a class="btn btn-success mb-3" href="/JobApplications/Create">+ New Application</a>
+	.title-area a {
+		height: fit-content;
+		display: flex;
+		align-self: flex-end;
+	}
+
+	.edit-delete {
+		display: flex;
+		justify-content: space-evenly;
+	}
+
+	.edit-delete a {
+		min-width: 5em;
+	}
+</style>
+
+<div class="title-area">
+	<div>
+		@if (Model?.FirstName != null)
+		{
+			<h6>Hello, @Model?.FirstName!</h6>
+		}
+		else
+		{
+			<h6>Hello!</h6>
+		}
+
+		<h2>Your Job Applications</h2>
+	</div>
+
+	<a class="btn btn-success mb-3" href="/JobApplications/Create">+ New Application</a>
+</div>
 
 <table class="table table-bordered">
 	<thead class="table-dark">
@@ -14,14 +49,15 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var app in Model)
+		@foreach (var app in Model?.Applications)
 		{
 			<tr>
 				<td>@app.Company</td>
 				<td>@app.Position</td>
 				<td>@app.DateApplied.ToShortDateString()</td>
-				<td>
-					<a href="/JobApplications/Delete/@app.Id" class="btn btn-danger btn-sm">Delete</a>
+				<td class="edit-delete">
+					<a href="/JobApplications/Edit/@app.Id" class="btn btn-primary btn-sm px-3 mr-3">Edit</a>
+					<a href="/JobApplications/Delete/@app.Id" class="btn btn-danger btn-sm px-3">Delete</a>
 				</td>
 			</tr>
 		}
